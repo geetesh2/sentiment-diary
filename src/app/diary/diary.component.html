@@ -1,31 +1,68 @@
-<div class="diary-entry-container">
-  <h2>{{ isEditing ? 'Edit Diary Entry' : 'New Diary Entry' }}</h2>
-  <form (ngSubmit)="onSubmit()" #diaryForm="ngForm">
-    <mat-form-field appearance="fill">
-      <mat-label>Diary Content</mat-label>
-      <textarea
-        matInput
-        required
-        name="content"
-        [(ngModel)]="diaryEntry.content"
-        rows="5"
-        placeholder="Write your thoughts here..."
-      ></textarea>
-    </mat-form-field>
+<div class="diary-layout">
+  <!-- Left side: Diary Entry Form -->
+  <div class="diary-entry-container">
+    <h2>{{ isEditing ? "Edit Diary Entry" : "New Diary Entry" }}</h2>
 
-    <div class="form-actions">
-      <button mat-raised-button color="primary" type="submit" [disabled]="diaryForm.invalid">
-        {{ isEditing ? 'Update' : 'Save' }}
-      </button>
-      <button
-        mat-raised-button
-        color="warn"
-        type="button"
-        *ngIf="isEditing"
-        (click)="onCancelEdit()"
-      >
-        Cancel
-      </button>
-    </div>
-  </form>
+    <!-- Diary Entry Form -->
+    <form (ngSubmit)="onSubmit()" #diaryForm="ngForm">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Diary Content</mat-label>
+        <textarea
+          matInput
+          required
+          name="content"
+          [(ngModel)]="diaryEntry.content"
+          rows="5"
+          placeholder="Write your thoughts here..."
+        ></textarea>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="diaryForm.invalid"
+        >
+          {{ isEditing ? "Update" : "Save" }}
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          *ngIf="isEditing"
+          (click)="onCancelEdit()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Right side: Diary Entries List -->
+  <div class="entries-list">
+    <mat-card *ngFor="let entry of diaryEntries" class="diary-card">
+      <mat-card-content>
+        <p>{{ entry.content }}</p>
+        <small>{{ entry.timestamp | date : "short" }}</small>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="editEntry(entry)">Edit</button>
+        <button
+          mat-button
+          color="primary"
+          [routerLink]="['/analysis']"
+          [state]="{ content: entry.content }"
+        >
+          View Sentiment
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card *ngIf="diaryEntries.length == 0" class="diary-card">
+      <mat-card-content>
+        Your Entries will appear here
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

@@ -6,6 +6,9 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class DiaryService {
+  getEntries() {
+    return of(this.entries);
+  }
   private entries: DiaryEntry[] = []; // Temporary in-memory storage
 
   addEntry(entry: DiaryEntry): Observable<void> {

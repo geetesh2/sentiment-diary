@@ -1,19 +1,58 @@
+.diary-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+
+  /* Ensure the layout takes full width */
+  width: 100%;
+}
+
 .diary-entry-container {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 1rem;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    background: #fff;
+  flex: 1; /* Occupy 80% of the width */
+  max-width: 75%; /* Cap width to prevent it from growing too large */
+}
+
+.entries-list {
+  flex: 0 0 20%; /* Fixed width of 20% */
+  max-width: 20%; /* Prevent it from exceeding 20% */
+  overflow-y: auto; /* Enable scrolling for long entries */
+  max-height: 80vh; /* Limit the height */
+  border-left: 1px solid #ccc; /* Add a subtle divider */
+  padding-left: 10px;
+}
+
+.diary-card {
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+button {
+  min-width: 100
+}
+
+@media (max-width: 768px) {
+  .diary-layout {
+    flex-direction: column;
   }
-  
-  mat-form-field {
-    width: 100%;
+
+  .entries-list {
+    max-width: 100%;
+    flex: 1;
   }
-  
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+
+  .diary-entry-container {
+    max-width: 100%;
   }
-  
+}

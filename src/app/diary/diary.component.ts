@@ -6,29 +6,49 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { DatePipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-diary',
   templateUrl: './diary.component.html',
   styleUrls: ['./diary.component.scss'],
-  standalone:true,
+  standalone: true,
   imports: [
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatCardModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DatePipe,
+    RouterModule,
+    CommonModule
   ],
 })
 export class DiaryEntryComponent implements OnInit {
-  diaryEntry: DiaryEntry = { id: '', userId: '', content: '', timestamp: new Date() };
+  diaryEntry: DiaryEntry = {
+    id: '',
+    userId: '',
+    content: '',
+    timestamp: new Date(),
+  };
   isEditing = false;
+  diaryEntries: DiaryEntry[] = [];
 
   constructor(private diaryService: DiaryService) {}
 
   ngOnInit(): void {
-    // If editing, populate diaryEntry (e.g., from route or service)
+    this.loadEntries();
+  }
+
+  loadEntries(): void {
+    this.diaryService.getEntries().subscribe((entries) => {
+      this.diaryEntries = entries;
+    });
   }
 
   onSubmit(): void {
@@ -38,10 +58,13 @@ export class DiaryEntryComponent implements OnInit {
         this.resetForm();
       });
     } else {
-      this.diaryService.addEntry(this.diaryEntry).subscribe(() => {
-        alert('Entry added successfully!');
-        this.resetForm();
-      });
+      // this.diaryService.addEntry(this.diaryEntry).subscribe(() => {
+      //   alert('Entry added successfully!');
+      //   this.resetForm();
+      // });
+      let temp:DiaryEntry = {... this.diaryEntry};
+      this.diaryEntries.push(temp);
+      this.resetForm();
     }
   }
 
@@ -50,7 +73,17 @@ export class DiaryEntryComponent implements OnInit {
   }
 
   private resetForm(): void {
-    this.diaryEntry = { id: '', userId: '', content: '', timestamp: new Date() };
+    this.diaryEntry = {
+      id: '',
+      userId: '',
+      content: '',
+      timestamp: new Date(),
+    };
     this.isEditing = false;
+  }
+
+  editEntry(entry: DiaryEntry): void {
+    this.diaryEntry = { ...entry }; // Populate form with entry data
+    this.isEditing = true;
   }
 }
