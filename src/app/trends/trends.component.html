@@ -1,1 +1,11 @@
-<p>trends works!</p>
+<div class="trends-container">
+    <h2>Mood Trends</h2>
+    <div class="chart-container">
+      <canvas baseChart
+              [data]="lineChartData"
+              [options]="lineChartOptions"
+              [type]="'line'">
+      </canvas>
+    </div>
+  </div>
+  
