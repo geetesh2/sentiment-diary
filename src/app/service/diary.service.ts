@@ -19,5 +19,10 @@ export class DiaryService {
     return of(); // Replace with Firestore logic
   }
 
+  addEntryWithAnalysis(entry: DiaryEntry): Observable<void> {
+    return of();
+  }
+  
+
   constructor() { }
 }
