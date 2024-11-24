@@ -1,1 +1,31 @@
-<p>diary works!</p>
+<div class="diary-entry-container">
+  <h2>{{ isEditing ? 'Edit Diary Entry' : 'New Diary Entry' }}</h2>
+  <form (ngSubmit)="onSubmit()" #diaryForm="ngForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Diary Content</mat-label>
+      <textarea
+        matInput
+        required
+        name="content"
+        [(ngModel)]="diaryEntry.content"
+        rows="5"
+        placeholder="Write your thoughts here..."
+      ></textarea>
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="diaryForm.invalid">
+        {{ isEditing ? 'Update' : 'Save' }}
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        type="button"
+        *ngIf="isEditing"
+        (click)="onCancelEdit()"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
