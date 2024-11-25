@@ -26,6 +26,6 @@ export class DiaryService {
     return of();
   }
   
-
+  diaryContent:string = '';
   constructor() { }
 }

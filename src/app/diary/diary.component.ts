@@ -86,4 +86,8 @@ export class DiaryEntryComponent implements OnInit {
     this.diaryEntry = { ...entry }; // Populate form with entry data
     this.isEditing = true;
   }
+
+  passText(content:string){
+    this.diaryService.diaryContent = content;
+  }
 }

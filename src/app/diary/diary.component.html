@@ -52,7 +52,7 @@
           mat-button
           color="primary"
           [routerLink]="['/analysis']"
-          [state]="{ content: entry.content }"
+          (click)="passText(entry.content)"
         >
           View Sentiment
         </button>

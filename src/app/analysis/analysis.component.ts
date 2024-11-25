@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DiaryService } from '../service/diary.service';
 
 @Component({
   selector: 'app-analysis',
@@ -10,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './analysis.component.html',
   styleUrls: ['./analysis.component.css'],
 })
-export class AnalysisComponent {
+export class AnalysisComponent implements OnInit{
   entryText: string = 'you are such a bad person';
   analysisResult: {
     sentiment?: string;
@@ -23,7 +25,12 @@ export class AnalysisComponent {
     'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
   private apiKey = 'AIzaSyDpiDENqAMVi-na6DQUnWobaaKreksGdrc';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private diaryService:DiaryService) {}
+
+  ngOnInit(): void {
+    // Retrieve the passed state
+    this.entryText = this.diaryService.diaryContent;
+  }
 
   analyzeEntry(): void {
     if (!this.entryText.trim()) {
