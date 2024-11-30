@@ -5,10 +5,10 @@ import { AuthenticationComponent } from './authentication/authentication.compone
 import { AnalysisComponent } from './analysis/analysis.component';
 
 export const routes: Routes = [
-      { path: 'diary-entry', component: DiaryEntryComponent },
-      { path: 'mood-trends', component: TrendsComponent },
+  { path: 'diary-entry', component: DiaryEntryComponent },
+  { path: 'mood-trends', component: TrendsComponent },
   { path: 'login', component: AuthenticationComponent },
   { path: 'analysis', component: AnalysisComponent },
-  { path: '', redirectTo: '/diary-entry', pathMatch: 'full' }, // Redirect default route
-  { path: '**', redirectTo: '/diary-entry' }, // Redirect unknown routes
-    ];
+  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirect default route
+  { path: '**', redirectTo: '/login' }, // Redirect unknown routes
+];

@@ -2,9 +2,9 @@
     <span class="app-title">Sentiment Diary</span>
     <span class="spacer"></span>
     <nav>
-      <a mat-button routerLink="/diary-entry" routerLinkActive="active-link">Diary</a>
-      <a mat-button routerLink="/mood-trends" routerLinkActive="active-link">Mood Trends</a>
-      <a mat-button routerLink="/login" routerLinkActive="active-link">Login</a>
+      <a mat-button routerLink="/diary-entry" routerLinkActive="active-link" (click)="navigate()" *ngIf="isLoggedIn" >{{ buttonText}}</a>
+      <a mat-button routerLink="/login" routerLinkActive="active-link" *ngIf="isLoggedIn">LogOut</a>
+      <a mat-button routerLink="/login" routerLinkActive="active-link" *ngIf="!isLoggedIn">LogIn</a>
     </nav>
   </mat-toolbar>
   
