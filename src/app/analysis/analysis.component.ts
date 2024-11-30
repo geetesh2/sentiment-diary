@@ -28,7 +28,6 @@ export class AnalysisComponent implements OnInit{
   constructor(private http: HttpClient,private diaryService:DiaryService) {}
 
   ngOnInit(): void {
-    // Retrieve the passed state
     this.entryText = this.diaryService.diaryContent;
   }
 

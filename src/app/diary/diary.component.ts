@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { SentimentService } from '../service/sentiment.service';
 
 @Component({
   selector: 'app-diary',
@@ -26,7 +27,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     DatePipe,
     RouterModule,
-    CommonModule
+    CommonModule,
   ],
 })
 export class DiaryEntryComponent implements OnInit {
@@ -39,7 +40,10 @@ export class DiaryEntryComponent implements OnInit {
   isEditing = false;
   diaryEntries: DiaryEntry[] = [];
 
-  constructor(private diaryService: DiaryService) {}
+  constructor(
+    private diaryService: DiaryService,
+    private analysisService: SentimentService
+  ) {}
 
   ngOnInit(): void {
     this.loadEntries();
@@ -52,6 +56,7 @@ export class DiaryEntryComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.analysisService.analyzeEntry(this.diaryEntry.content);
     if (this.isEditing) {
       this.diaryService.updateEntry(this.diaryEntry).subscribe(() => {
         alert('Entry updated successfully!');
@@ -62,7 +67,7 @@ export class DiaryEntryComponent implements OnInit {
       //   alert('Entry added successfully!');
       //   this.resetForm();
       // });
-      let temp:DiaryEntry = {... this.diaryEntry};
+      let temp: DiaryEntry = { ...this.diaryEntry };
       this.diaryEntries.push(temp);
       this.resetForm();
     }
@@ -87,7 +92,7 @@ export class DiaryEntryComponent implements OnInit {
     this.isEditing = true;
   }
 
-  passText(content:string){
+  passText(content: string) {
     this.diaryService.diaryContent = content;
   }
 }

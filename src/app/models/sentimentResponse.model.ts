@@ -1,8 +1,6 @@
 export interface SentimentResponse {
-    score_tag: string;
-    agreement: string;
-    subjectivity: string;
+    sentiment: string;
     confidence: number;
     irony: string;
-  }
+}
   

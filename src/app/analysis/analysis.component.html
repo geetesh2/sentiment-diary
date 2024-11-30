@@ -14,10 +14,10 @@
 
   <div *ngIf="analysisResult" class="result">
     <h3>Analysis Results</h3>
-    <p><strong>Sentiment:</strong> {{ analysisResult?.sentiment || "N/A" }}</p>
+    <p><strong>Sentiment:</strong> {{ analysisResult.sentiment || "N/A" }}</p>
     <p>
-      <strong>Confidence:</strong> {{ analysisResult?.confidence || "N/A" }}%
+      <strong>Confidence:</strong> {{ analysisResult.confidence || "N/A" }}%
     </p>
-    <p><strong>Irony:</strong> {{ analysisResult?.irony || "N/A" }}</p>
+    <p><strong>Irony:</strong> {{ analysisResult.irony || "N/A" }}</p>
   </div>
 </div>
