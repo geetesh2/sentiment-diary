@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common'; 
 import { AuthService } from '../service/auth.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { DiaryService } from '../service/diary.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
 
   buttonText: string = 'Diary Entries';
   isLoggedIn: boolean = false;
@@ -25,7 +26,8 @@ export class HeaderComponent {
   constructor(
     private router: Router,
     private userService: AuthService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private diaryService:DiaryService
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +66,7 @@ export class HeaderComponent {
   }
 
   ngOnDestroy(): void {
+    this.diaryService.diarySubject.next([]);
     this.userService.logOut();
   }
 

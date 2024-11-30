@@ -1,31 +1,74 @@
 import { Injectable } from '@angular/core';
 import { DiaryEntry } from '../models/diaryEntry.model';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { SentimentService } from './sentiment.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DiaryService {
-  getEntries() {
-    return of(this.entries);
-  }
-  private entries: DiaryEntry[] = []; // Temporary in-memory storage
+  private firebaseDbUrl =
+    'https://sentiment-diary-197da-default-rtdb.asia-southeast1.firebasedatabase.app/';
+  diaryContent: string = '';
 
-  addEntry(entry: DiaryEntry): Observable<void> {
-    this.entries.push(entry);
-    return of(); // Replace with Firestore logic
-  }
+  diarySubject = new BehaviorSubject<DiaryEntry[]>([]);
 
-  updateEntry(entry: DiaryEntry): Observable<void> {
-    const index = this.entries.findIndex((e) => e.id === entry.id);
-    if (index !== -1) this.entries[index] = entry;
-    return of(); // Replace with Firestore logic
+  constructor(
+    private http: HttpClient,
+  ) {}
+
+  private getUserId(): string | null {
+    return localStorage.getItem('localId');
   }
 
-  addEntryWithAnalysis(entry: DiaryEntry): Observable<void> {
-    return of();
+  /**
+   * Fetch all diary entries for the current user.
+   */
+  getEntries(): void {
+    const userId = this.getUserId();
+    if (!userId) {
+      throw new Error('User ID is not available.');
+    }
+    const url = `${this.firebaseDbUrl}/entries/${userId}.json`;
+
+    this.http.get<{ [key: string]: DiaryEntry }>(url).subscribe((response) => {
+      const entries = response
+        ? Object.keys(response).map((key) => ({ ...response[key] }))
+        : [];
+      this.diarySubject.next(entries);
+    });
   }
-  
-  diaryContent:string = '';
-  constructor() { }
+
+  addEntry(entry: DiaryEntry): void {
+    const userId = this.getUserId();
+    if (!userId) {
+      throw new Error('User ID is not available.');
+    }
+    const url = `${this.firebaseDbUrl}/entries/${userId}.json`;
+
+    this.http.post<{ name: string }>(url, entry).subscribe((response) => {
+      entry.id = response.name; // Firebase assigns a unique key
+      const currentEntries = this.diarySubject.value;
+      this.diarySubject.next([...currentEntries, entry]);
+    });
+  }
+
+  /**
+   * Update an existing diary entry.
+   */
+  updateEntry(entry: DiaryEntry): void {
+    const userId = this.getUserId();
+    if (!userId) {
+      throw new Error('User ID is not available.');
+    }
+    const url = `${this.firebaseDbUrl}/entries/${userId}/${entry.id}.json`;
+
+    this.http.put(url, entry).subscribe(() => {
+      const updatedEntries = this.diarySubject.value.map((e) =>
+        e.id === entry.id ? entry : e
+      );
+      this.diarySubject.next(updatedEntries);
+    });
+  }
 }

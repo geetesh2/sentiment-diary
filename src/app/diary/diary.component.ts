@@ -46,31 +46,34 @@ export class DiaryEntryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.diaryService.diarySubject.subscribe((entries: DiaryEntry[]) => {
+      this.diaryEntries = entries;
+    });
     this.loadEntries();
+    this.analysisService.clearEntries();
+    for (let entry of this.diaryEntries) {
+      this.analysisService.analyzeEntry(entry.content);
+    }
   }
 
   loadEntries(): void {
-    this.diaryService.getEntries().subscribe((entries) => {
-      this.diaryEntries = entries;
-    });
+    this.diaryService.getEntries();
   }
 
   onSubmit(): void {
-    this.analysisService.analyzeEntry(this.diaryEntry.content);
-    if (this.isEditing) {
-      this.diaryService.updateEntry(this.diaryEntry).subscribe(() => {
-        alert('Entry updated successfully!');
-        this.resetForm();
-      });
-    } else {
-      // this.diaryService.addEntry(this.diaryEntry).subscribe(() => {
-      //   alert('Entry added successfully!');
-      //   this.resetForm();
-      // });
-      let temp: DiaryEntry = { ...this.diaryEntry };
-      this.diaryEntries.push(temp);
-      this.resetForm();
+    if (!this.diaryEntry.content.trim()) {
+      alert('Please enter some text before submitting.');
+      return;
     }
+
+    if (this.isEditing) {
+      this.diaryService.updateEntry(this.diaryEntry);
+    } else {
+      this.diaryEntry.timestamp = new Date(); // Set timestamp for new entry
+      this.diaryService.addEntry(this.diaryEntry);
+    }
+
+    this.resetForm();
   }
 
   onCancelEdit(): void {
@@ -92,7 +95,7 @@ export class DiaryEntryComponent implements OnInit {
     this.isEditing = true;
   }
 
-  passText(content: string) {
+  passText(content: string): void {
     this.diaryService.diaryContent = content;
   }
 }

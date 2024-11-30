@@ -3,6 +3,5 @@ export interface DiaryEntry {
     userId: string;
     content: string;
     timestamp: Date;
-    sentimentScore?: number;
   }
   

@@ -7,6 +7,7 @@ import { SentimentResponse } from '../models/sentimentResponse.model';
   providedIn: 'root'
 })
 export class SentimentService {
+  
 
   constructor(private http: HttpClient,private diaryService:DiaryService) { }
 
@@ -20,7 +21,14 @@ export class SentimentService {
   'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
 private apiKey = 'AIzaSyDpiDENqAMVi-na6DQUnWobaaKreksGdrc';
 
+clearEntries() {
+  this.sentimentResponses = [];
+}
+
   analyzeEntry(textToanaylze:string): void {
+    if(textToanaylze == ''){
+      return;
+    }
     console.log(textToanaylze);
     if (!textToanaylze.trim()) {
       alert('Please enter some text to analyze.');
