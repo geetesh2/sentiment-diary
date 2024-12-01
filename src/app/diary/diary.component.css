@@ -1,9 +1,9 @@
 .diary-layout {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: flex-start;
   gap: 20px;
-  padding: 20px;
+  padding: 0px;
 
   /* Ensure the layout takes full width */
   width: 100%;

@@ -9,7 +9,7 @@ import { SentimentResponse } from '../models/sentimentResponse.model';
 export class SentimentService {
   
 
-  constructor(private http: HttpClient,private diaryService:DiaryService) { }
+  constructor(private http: HttpClient) { }
 
   entryText: string = 'you are such a bad person';
   analysisResult:SentimentResponse | null = null;
@@ -19,61 +19,62 @@ export class SentimentService {
 
   private apiUrl =
   'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
-private apiKey = 'AIzaSyDpiDENqAMVi-na6DQUnWobaaKreksGdrc';
+  private apiKey = 'AIzaSyDpiDENqAMVi-na6DQUnWobaaKreksGdrc';
 
-clearEntries() {
-  this.sentimentResponses = [];
-}
+  clearEntries() {
+    this.sentimentResponses = [];
+  }
 
-  analyzeEntry(textToanaylze:string): void {
-    if(textToanaylze == ''){
-      return;
-    }
-    console.log(textToanaylze);
-    if (!textToanaylze.trim()) {
-      alert('Please enter some text to analyze.');
-      return;
-    }
+    analyzeEntry(textToanaylze:string): void {
+      console.log("hi");
+      if(textToanaylze == ''){
+        return;
+      }
+      console.log(textToanaylze);
+      if (!textToanaylze.trim()) {
+        alert('Please enter some text to analyze.');
+        return;
+      }
 
-    this.isLoading = true;
+      this.isLoading = true;
 
-    const payload = {
-      contents: [
-        {
-          parts: [
-            {
-              text: `
-                Analyze the sentiment of the following text: "${textToanaylze}". 
-                Respond in this JSON format:
-                {
-                  "sentiment": "positive | neutral | negative",
-                  "confidence": "number (0-100)",
-                  "irony": "ironic | not ironic"
-                }
-              `,
-            },
-          ],
-        },
-      ],
-    };
+      const payload = {
+        contents: [
+          {
+            parts: [
+              {
+                text: `
+                  Analyze the sentiment of the following text: "${textToanaylze}". 
+                  Respond in this JSON format:
+                  {
+                    "sentiment": "positive | neutral | negative",
+                    "confidence": "number (0-100)",
+                    "irony": "ironic | not ironic"
+                  }
+                `,
+              },
+            ],
+          },
+        ],
+      };
 
-    this.http
-      .post(`${this.apiUrl}?key=${this.apiKey}`, payload, {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      .subscribe(
-        (response: any) => {
-          this.isLoading = false;
-          var response:any = this.parseJsonResponse(response);
-          this.sentimentResponses.push(response);
-          console.log("succesful");
-        },
-        (error) => {
-          this.isLoading = false;
-          alert('An error occurred while analyzing the text.');
-          console.error(error);
-        }
-      );
+      this.http
+        .post(`${this.apiUrl}?key=${this.apiKey}`, payload, {
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .subscribe(
+          (response: any) => {
+            this.isLoading = false;
+            var response:any = this.parseJsonResponse(response);
+            this.sentimentResponses.push(response);
+            console.log("succesful");
+          },
+          (error) => {
+            this.isLoading = false;
+            alert('An error occurred while analyzing the text.');
+            console.error(error);
+          }
+        );
   }
 
   private parseJsonResponse(response: any): {

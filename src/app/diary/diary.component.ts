@@ -50,10 +50,6 @@ export class DiaryEntryComponent implements OnInit {
       this.diaryEntries = entries;
     });
     this.loadEntries();
-    this.analysisService.clearEntries();
-    for (let entry of this.diaryEntries) {
-      this.analysisService.analyzeEntry(entry.content);
-    }
   }
 
   loadEntries(): void {
@@ -69,7 +65,7 @@ export class DiaryEntryComponent implements OnInit {
     if (this.isEditing) {
       this.diaryService.updateEntry(this.diaryEntry);
     } else {
-      this.diaryEntry.timestamp = new Date(); // Set timestamp for new entry
+      this.diaryEntry.timestamp = new Date(); 
       this.diaryService.addEntry(this.diaryEntry);
     }
 
@@ -91,7 +87,7 @@ export class DiaryEntryComponent implements OnInit {
   }
 
   editEntry(entry: DiaryEntry): void {
-    this.diaryEntry = { ...entry }; // Populate form with entry data
+    this.diaryEntry = { ...entry };
     this.isEditing = true;
   }
 

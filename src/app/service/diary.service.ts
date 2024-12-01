@@ -16,6 +16,7 @@ export class DiaryService {
 
   constructor(
     private http: HttpClient,
+    private sentimentService:SentimentService
   ) {}
 
   private getUserId(): string | null {
@@ -36,7 +37,13 @@ export class DiaryService {
       const entries = response
         ? Object.keys(response).map((key) => ({ ...response[key] }))
         : [];
-      this.diarySubject.next(entries);
+        this.sentimentService.clearEntries();
+
+      for(let entry of entries){
+        this.sentimentService.analyzeEntry(entry.content);
+      }
+        this.diarySubject.next(entries);
+
     });
   }
 
@@ -50,13 +57,11 @@ export class DiaryService {
     this.http.post<{ name: string }>(url, entry).subscribe((response) => {
       entry.id = response.name; // Firebase assigns a unique key
       const currentEntries = this.diarySubject.value;
+      this.sentimentService.analyzeEntry(entry.content);
       this.diarySubject.next([...currentEntries, entry]);
     });
   }
 
-  /**
-   * Update an existing diary entry.
-   */
   updateEntry(entry: DiaryEntry): void {
     const userId = this.getUserId();
     if (!userId) {

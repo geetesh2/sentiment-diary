@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';
-import { DiaryService } from '../service/diary.service';
 import { SentimentService } from '../service/sentiment.service';
 import { SentimentResponse } from '../models/sentimentResponse.model';
 import { CommonModule } from '@angular/common';
@@ -51,8 +50,8 @@ export class TrendsComponent implements OnInit {
   }
 
   private loadMoodTrends(): void {
-    // Retrieve the sentiment responses from the service
-    const sentiments: SentimentResponse[] = this.sentimentService.sentimentResponses;
+    const sentiments: SentimentResponse[] =
+      this.sentimentService.sentimentResponses;
     console.log('Sentiments:', sentiments);
 
     if (!sentiments || sentiments.length === 0) {
@@ -61,7 +60,9 @@ export class TrendsComponent implements OnInit {
     }
 
     // Generate scores and labels
-    const scores: number[] = sentiments.map((sentiment) => this.getSentimentScore(sentiment));
+    const scores: number[] = sentiments.map((sentiment) =>
+      this.getSentimentScore(sentiment)
+    );
     const labels: string[] = sentiments.map((_, index) => `Entry ${index + 1}`);
 
     // Update the chart data
@@ -75,14 +76,16 @@ export class TrendsComponent implements OnInit {
 
   private getSentimentScore(sentiment: SentimentResponse): number {
     // Base score mapping for sentiment
-    const sentimentScores: { [key in SentimentResponse['sentiment']]: number } = {
-      positive: 1,
-      neutral: 0,
-      negative: -1,
-    };
+    const sentimentScores: { [key in SentimentResponse['sentiment']]: number } =
+      {
+        positive: 1,
+        neutral: 0,
+        negative: -1,
+      };
 
     // Default base score for unknown sentiment
-    const baseScore = sentimentScores[sentiment.sentiment as keyof typeof sentimentScores] || 0;
+    const baseScore =
+      sentimentScores[sentiment.sentiment as keyof typeof sentimentScores] || 0;
 
     // Normalize confidence (0-1 scale)
     let confidenceWeight = (sentiment.confidence || 0) / 100;
