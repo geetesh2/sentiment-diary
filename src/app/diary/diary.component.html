@@ -43,9 +43,9 @@
   <div class="entries-list">
     <mat-card *ngFor="let entry of diaryEntries" class="diary-card">
       <mat-card-content>
-        <p>{{ entry.content }}</p>
+        <p>{{ entry.content | truncate:20 }}</p>
         <small>{{ entry.timestamp | date : "short" }}</small>
-      </mat-card-content>
+      </mat-card-content>      
       <mat-card-actions>
         <button mat-button (click)="editEntry(entry)">Edit</button>
         <button

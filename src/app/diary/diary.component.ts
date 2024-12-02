@@ -10,7 +10,8 @@ import { MatCardModule } from '@angular/material/card';
 import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { TruncatePipe } from "../pipes/truncate.pipe"; 
 
 @Component({
   selector: 'app-diary',
@@ -28,8 +29,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     DatePipe,
     RouterModule,
     CommonModule,
-    MatProgressSpinnerModule
-  ],
+    MatProgressSpinnerModule,
+    TruncatePipe
+],
 })
 export class DiaryEntryComponent implements OnInit {
   diaryEntry: DiaryEntry = {
