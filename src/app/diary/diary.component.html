@@ -1,9 +1,10 @@
 <div class="diary-layout">
-  <!-- Left side: Diary Entry Form -->
+  <div *ngIf="loading" class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
   <div class="diary-entry-container">
     <h2>{{ isEditing ? "Edit Diary Entry" : "New Diary Entry" }}</h2>
-
-    <!-- Diary Entry Form -->
     <form (ngSubmit)="onSubmit()" #diaryForm="ngForm">
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Diary Content</mat-label>
@@ -39,7 +40,6 @@
     </form>
   </div>
 
-  <!-- Right side: Diary Entries List -->
   <div class="entries-list">
     <mat-card *ngFor="let entry of diaryEntries" class="diary-card">
       <mat-card-content>

@@ -10,7 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { SentimentService } from '../service/sentiment.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 
 @Component({
   selector: 'app-diary',
@@ -28,6 +28,7 @@ import { SentimentService } from '../service/sentiment.service';
     DatePipe,
     RouterModule,
     CommonModule,
+    MatProgressSpinnerModule
   ],
 })
 export class DiaryEntryComponent implements OnInit {
@@ -36,23 +37,26 @@ export class DiaryEntryComponent implements OnInit {
     userId: '',
     content: '',
     timestamp: new Date(),
+    sentimentScore: 0
   };
   isEditing = false;
   diaryEntries: DiaryEntry[] = [];
+  loading = false; // Loader state
 
   constructor(
     private diaryService: DiaryService,
-    private analysisService: SentimentService
   ) {}
 
   ngOnInit(): void {
     this.diaryService.diarySubject.subscribe((entries: DiaryEntry[]) => {
       this.diaryEntries = entries;
+      this.loading = false;
     });
     this.loadEntries();
   }
 
   loadEntries(): void {
+    this.loading = true;
     this.diaryService.getEntries();
   }
 
@@ -82,6 +86,8 @@ export class DiaryEntryComponent implements OnInit {
       userId: '',
       content: '',
       timestamp: new Date(),
+      sentimentScore: 0
+
     };
     this.isEditing = false;
   }
