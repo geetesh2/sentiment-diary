@@ -1,34 +1,91 @@
 .analysis-container {
-    text-align: center;
-    margin: 20px;
-  }
-  
-  textarea {
-    width: 100%;
-    max-width: 500px;
-    margin: 10px 0;
-    font-size: 1rem;
-  }
-  
-  button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 1rem;
-  }
-  
-  .loading {
-    margin-top: 10px;
-    color: #007bff;
-    font-weight: bold;
-  }
-  
-  .result {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    text-align: left;
-    display: inline-block;
-  }
-  
+  text-align: center;
+  margin: 30px auto;
+  width: 100%;
+  max-width: 600px;  /* Ensure container has a max width for larger screens */
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  /* Soft shadow for depth */
+}
+
+textarea {
+  width: 100%;
+  max-width: 100%;
+  margin: 15px 0;
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;  /* Allow users to resize vertically */
+}
+
+button {
+  margin: 5px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.action-btn {
+  width: 150px;
+  color: white;
+}
+
+.analyze-btn {
+  background-color: #007bff;
+}
+
+.analyze-btn:hover {
+  background-color: #0056b3;
+}
+
+.reset-btn {
+  background-color: #f44336;
+}
+
+.reset-btn:hover {
+  background-color: #d32f2f;
+}
+
+.loading {
+  margin-top: 15px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.result {
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ffffff;
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.result p {
+  font-size: 1rem;
+  margin: 5px 0;
+  color: #555;
+}
+
+.result strong {
+  color: #333;
+}

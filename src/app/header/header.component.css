@@ -1,25 +1,40 @@
 .header-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .app-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .spacer {
-    flex: 1;
-  }
-  
-  nav a {
-    text-decoration: none;
-    color: white;
-    margin-right: 1rem;
-  }
-  
-  nav a.active-link {
-    font-weight: bold;
-    border-bottom: 2px solid white;
-  }
-  
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;  /* Add padding for spacing */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);  /* Add subtle shadow for depth */
+}
+
+.app-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;  /* Ensure title stands out */
+}
+
+.spacer {
+  flex: 1;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  margin-left: 1.5rem;
+  transition: color 0.3s ease, transform 0.2s ease;  /* Add smooth transition for hover effects */
+}
+
+nav a.active-link {
+  font-weight: bold;
+  border-bottom: 3px solid white;  /* Increase border thickness for emphasis */
+  transform: scale(1.1);  /* Slight scale effect on active link */
+}
+
+nav a:hover {
+  color: #ffeb3b;  /* Yellow color on hover for a more noticeable effect */
+  transform: scale(1.05);  /* Slight zoom on hover */
+}

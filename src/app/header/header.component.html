@@ -1,9 +1,8 @@
 <mat-toolbar color="primary" class="header-container">
-    <span class="app-title">Sentiment Diary</span>
-    <span class="spacer"></span>
-    <nav>
-      <a mat-button routerLink="/diary-entry" routerLinkActive="active-link" (click)="navigate()" *ngIf="isLoggedIn" >{{ buttonText}}</a>
-      <a mat-button routerLink="/login" routerLinkActive="active-link" *ngIf="isLoggedIn">LogOut</a>
-    </nav>
-  </mat-toolbar>
-  
+  <span class="app-title">Sentiment Diary</span>
+  <span class="spacer"></span>
+  <nav>
+    <a mat-button routerLink="/diary-entry" routerLinkActive="active-link" (click)="navigate()" *ngIf="isLoggedIn">{{ buttonText }}</a>
+    <a mat-button routerLink="/login" routerLinkActive="active-link" *ngIf="isLoggedIn">LogOut</a>
+  </nav>
+</mat-toolbar>

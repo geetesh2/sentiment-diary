@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../service/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { Router } from '@angular/router';
+import { AuthService } from '../service/auth.service';
 @Component({
   selector: 'app-authentication',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './authentication.component.html',
-  styleUrl: './authentication.component.css'
+  imports: [ReactiveFormsModule, FormsModule, CommonModule],
+  styleUrls: ['./authentication.component.css'],
 })
-export class AuthenticationComponent {
+export class AuthenticationComponent implements OnInit
+{
   isSignup = false;
   email = '';
   password = '';
+  confirmPassword = '';
 
   constructor(private userService: AuthService, private router: Router) {}
 
@@ -27,11 +28,13 @@ export class AuthenticationComponent {
     this.isSignup = !this.isSignup;
   }
 
-  onSubmit() {
+  onSubmit(form: any) {
+    if (form.invalid) return;
+  
     if (this.isSignup) {
       this.userService.signUp(this.email, this.password);
     } else {
       this.userService.logInUser(this.email, this.password);
     }
-  }
+  }  
 }

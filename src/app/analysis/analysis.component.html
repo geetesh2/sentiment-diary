@@ -7,8 +7,8 @@
     cols="40"
   ></textarea>
   <br />
-  <button (click)="analyzeEntry()" [disabled]="isLoading">Analyze</button>
-  <button (click)="reset()">Reset</button>
+  <button (click)="analyzeEntry()" [disabled]="isLoading" class="action-btn analyze-btn">Analyze</button>
+  <button (click)="reset()" class="action-btn reset-btn">Reset</button>
 
   <div *ngIf="isLoading" class="loading">Analyzing your entry...</div>
 
