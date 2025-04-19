@@ -4,7 +4,6 @@
     <nav>
       <a mat-button routerLink="/diary-entry" routerLinkActive="active-link" (click)="navigate()" *ngIf="isLoggedIn" >{{ buttonText}}</a>
       <a mat-button routerLink="/login" routerLinkActive="active-link" *ngIf="isLoggedIn">LogOut</a>
-      <a mat-button routerLink="/login" routerLinkActive="active-link" *ngIf="!isLoggedIn">LogIn</a>
     </nav>
   </mat-toolbar>
   

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DiaryService } from '../service/diary.service';
+import { environment } from 'src/environments/environment.development'; // Import environment
 
 @Component({
   selector: 'app-analysis',
@@ -11,7 +12,7 @@ import { DiaryService } from '../service/diary.service';
   templateUrl: './analysis.component.html',
   styleUrls: ['./analysis.component.css'],
 })
-export class AnalysisComponent implements OnInit{
+export class AnalysisComponent implements OnInit {
   entryText: string = 'you are such a bad person';
   analysisResult: {
     sentiment?: string;
@@ -20,11 +21,10 @@ export class AnalysisComponent implements OnInit{
   } | null = null;
   isLoading: boolean = false;
 
-  private apiUrl =
-    'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
-  private apiKey = 'AIzaSyDpiDENqAMVi-na6DQUnWobaaKreksGdrc';
+  private apiUrl = environment.sentimentApiUrl; // Use API URL from environment
+  private apiKey = environment.sentimentApiKey; // Use API key from environment
 
-  constructor(private http: HttpClient,private diaryService:DiaryService) {}
+  constructor(private http: HttpClient, private diaryService: DiaryService) {}
 
   ngOnInit(): void {
     this.entryText = this.diaryService.diaryContent;

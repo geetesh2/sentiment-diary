@@ -16,7 +16,6 @@ export class AuthenticationComponent {
   isSignup = false;
   email = '';
   password = '';
-  confirmPassword = '';
 
   constructor(private userService: AuthService, private router: Router) {}
 

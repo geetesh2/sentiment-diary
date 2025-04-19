@@ -65,6 +65,5 @@ export class TrendsComponent implements OnInit {
     this.lineChartData.labels = labels;
 
     this.chart?.update();
-    console.log('Chart Data:', this.lineChartData);
   }
 }

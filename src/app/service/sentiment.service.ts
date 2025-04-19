@@ -1,15 +1,15 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SentimentResponse } from '../models/sentimentResponse.model';
 import { catchError, map, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment.development'; // Import environment variables
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SentimentService {
-  private apiUrl =
-    'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
-  private apiKey = 'AIzaSyDpiDENqAMVi-na6DQUnWobaaKreksGdrc';
+  private apiUrl = environment.sentimentApiUrl; // Use the URL from environment
+  private apiKey = environment.sentimentApiKey; // Use the API key from environment
 
   sentimentResponses: SentimentResponse[] = [];
   isLoading: boolean = false;
@@ -145,10 +145,6 @@ export class SentimentService {
 
     // Calculate final score
     const finalScore = baseScore * confidenceWeight;
-
-    console.log(
-      `Base Score: ${baseScore}, Confidence Weight: ${confidenceWeight}, Final Score: ${finalScore}`
-    );
 
     return finalScore;
   }
